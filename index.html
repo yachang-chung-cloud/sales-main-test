@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HCP 系統展示 (Demo)</title>
+    <title>HCP Test</title>
     <!-- 引入 Bootstrap 5 (CSS + JS) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -24,76 +24,144 @@
         }
         .spinner-custom { width: 3rem; height: 3rem; color: #001964; }
 
-        /* 頂部 Tab 按鈕 */
-        .top-nav { display: flex; background-color: #001964; padding-top: 20px; flex-shrink: 0; }
-        .nav-btn {
-            flex: 1; background: transparent; border: none; color: white; padding: 12px;
-            font-weight: 500; border-radius: 0 0 10px 10px; cursor: pointer; position: relative; transition: all 0.2s;
+        /* ================= 頂部導航列 (視覺還原重點) ================= */
+        .top-nav { 
+            display: flex; 
+            background-color: #001964; 
+            padding-top: 20px; 
+            flex-shrink: 0; 
+            position: relative;
+            z-index: 1;
+            padding-bottom: 0;
         }
-        .nav-btn.active { background-color: #e2f0fa; color: #001964; border-radius: 10px 10px 0 0; font-weight: bold; }
-        .nav-btn.active::before { content: ''; position: absolute; bottom: 0; left: -10px; width: 10px; height: 10px; background: #001964; border-bottom-right-radius: 10px; }
-        .nav-btn.active::after { content: ''; position: absolute; bottom: 0; right: -10px; width: 10px; height: 10px; background: #001964; border-bottom-left-radius: 10px; }
+        
+        .nav-btn {
+            flex: 1; 
+            background: transparent; 
+            border: none; 
+            color: white; 
+            padding: 12px 0;
+            font-size: 15px;
+            font-weight: 500; 
+            cursor: pointer; 
+            position: relative; 
+            transition: none; 
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .nav-btn.active { 
+            background-color: #e2f0fa; 
+            color: #001964; 
+            font-weight: bold;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+            z-index: 2;
+        }
+
+        /* 倒圓角 */
+        .nav-btn.active::before {
+            content: ''; position: absolute; bottom: 0; left: -10px; width: 10px; height: 10px;
+            background: radial-gradient(circle at top left, transparent 10px, #e2f0fa 10.5px);
+            z-index: 1;
+        }
+        .nav-btn.active::after {
+            content: ''; position: absolute; bottom: 0; right: -10px; width: 10px; height: 10px;
+            background: radial-gradient(circle at top right, transparent 10px, #e2f0fa 10.5px);
+            z-index: 1;
+        }
 
         /* 內容區塊 */
         .content-area { padding: 20px; flex: 1; overflow-y: auto; overflow-x: hidden; }
         
-        /* 共用元件 */
+        /* 搜尋區塊 */
         .search-box { background: transparent; padding-bottom: 10px; }
-        .form-control { border-radius: 5px; border: 1px solid #ccc; padding: 10px; }
-        .btn-primary-custom { background-color: #001964; color: white; width: 100%; border-radius: 30px; padding: 10px; border: none; }
+        .form-control { 
+            border-radius: 5px; border: none; padding: 12px 15px; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); font-size: 15px;
+        }
+        .form-control::placeholder { color: #aaa; }
+        
+        .btn-primary-custom { 
+            background-color: #001964; color: white; width: 100%; border-radius: 30px; 
+            padding: 12px; border: none; font-size: 16px; margin-top: 15px;
+        }
         .btn-primary-custom:hover { background-color: #002a80; color: white; }
-        .btn-primary-custom:disabled { background-color: #ccc; cursor: not-allowed; }
+        .btn-primary-custom:disabled { background-color: #8892b5; cursor: not-allowed; }
 
-        /* 分頁 Tabs */
-        .sub-tabs { display: flex; border-bottom: 1px solid #ccc; margin-bottom: 15px; }
-        .sub-tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; color: #666; border-bottom: 2px solid transparent; }
+        /* 子分頁 */
+        .sub-tabs { display: flex; border-bottom: 1px solid #cddceb; margin-bottom: 15px; }
+        .sub-tab { 
+            flex: 1; text-align: center; padding: 12px; cursor: pointer; color: #7b88a8; 
+            font-size: 15px; border-bottom: 2px solid transparent; transition: all 0.2s;
+        }
         .sub-tab.active { color: #001964; border-bottom: 2px solid #001964; font-weight: bold; }
 
-        /* 卡片樣式 */
-        .custom-card { background: white; border-radius: 8px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        /* 卡片 */
+        .custom-card { 
+            background: white; border-radius: 8px; padding: 15px; margin-bottom: 15px; 
+            border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.03); 
+        }
         .card-header-custom { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .title-text { color: #001964; font-weight: bold; font-size: 1.1rem; }
-        .info-text { color: #001964; font-size: 0.9rem; margin-bottom: 3px; }
-        .sub-info-text { color: #9E9E9E; font-size: 0.8rem; }
+        .info-text { color: #001964; font-size: 0.95rem; margin-bottom: 3px; }
+        .sub-info-text { color: #9E9E9E; font-size: 0.85rem; }
         
+        /* 進度條 */
+        .progress-card {
+            background: linear-gradient(135deg, #4aa3e8 0%, #3b97de 100%);
+            color: white; padding: 15px 20px; border-radius: 12px; margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(59, 151, 222, 0.2);
+        }
+        .progress-hr { border-top: 1px solid rgba(255,255,255,0.4); margin: 10px 0; }
+
         /* 按鈕群 */
-        .icon-btn { background: none; border: none; cursor: pointer; opacity: 0.7; color: #001964; }
-        .icon-btn:hover { opacity: 1; }
-        .back-btn { background: transparent; border: none; color: #001964; font-weight: bold; display: flex; align-items: center; padding: 0; margin-bottom: 15px; }
+        .icon-btn { background: none; border: none; cursor: pointer; opacity: 0.8; color: #001964; padding: 5px; }
+        .icon-btn:hover { opacity: 1; background-color: #f0f4ff; border-radius: 50%; }
+        .back-btn { background: transparent; border: none; color: #001964; font-weight: bold; display: flex; align-items: center; padding: 0; margin-bottom: 15px; font-size: 1rem;}
         
-        /* 活動清單特定樣式 */
-        .activity-img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; margin-bottom: 10px; background-color: #ddd;}
-        .table-custom th { text-align: right; font-weight: normal; font-size: 0.9rem; color: #666; padding: 5px;}
-        .table-custom td { text-align: right; font-size: 0.9rem; color: #001964; padding: 5px; }
+        /* 活動清單 */
+        .activity-img { width: 100%; height: 160px; object-fit: cover; border-radius: 6px; margin-bottom: 12px; background-color: #eee;}
+        .table-custom th { text-align: right; font-weight: normal; font-size: 0.9rem; color: #666; padding: 8px 5px;}
+        .table-custom td { text-align: right; font-size: 0.95rem; color: #001964; padding: 8px 5px; }
         .table-custom td:first-child { text-align: left; }
-        .total-row { background-color: #e2f0fa; font-weight: bold; }
-        .action-btns { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
-        .btn-outline { border: 1px solid #ccc; color: #001964; background: white; width: 100%; padding: 5px; border-radius: 5px;}
+        .total-row { background-color: #e2f0fa; font-weight: bold; border-radius: 4px; }
+        .total-row td { padding-top: 10px; padding-bottom: 10px; }
+        .action-btns { display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px; }
+        .btn-outline { 
+            border: 1px solid #001964; color: #001964; background: white; width: 100%; 
+            padding: 8px; border-radius: 5px; font-size: 14px;
+        }
+        .btn-outline:hover { background-color: #f0f4ff; }
 
-        /* 詳細頁特定樣式 */
-        .hcp-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; background: #ccc; }
+        /* 詳細頁與 Modal */
+        .hcp-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; background: #ccc; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .detail-label { font-weight: bold; color: #001964; font-size: 0.9rem; margin-top: 10px; }
-        .detail-value { color: #333; margin-bottom: 5px; }
+        .detail-value { color: #333; margin-bottom: 5px; font-size: 1rem; }
         
-        /* 用戶歷程列表 */
-        .history-item { position: relative; padding-left: 20px; padding-bottom: 20px; border-left: 2px solid #d7e6f8; margin-left: 5px; }
-        .history-item::before { content: ''; position: absolute; left: -6px; top: 0; width: 10px; height: 10px; border-radius: 50%; background: #3b97de; }
+        .history-item { position: relative; padding-left: 20px; padding-bottom: 25px; border-left: 2px solid #d7e6f8; margin-left: 8px; }
+        .history-item::before { content: ''; position: absolute; left: -6px; top: 0; width: 10px; height: 10px; border-radius: 50%; background: #3b97de; box-shadow: 0 0 0 3px white; }
         .history-item:last-child { border-left: none; }
-        .history-date { font-size: 0.8rem; color: #888; margin-bottom: 2px; }
-        .history-action { font-size: 0.9rem; color: #001964; }
+        .history-date { font-size: 0.85rem; color: #888; margin-bottom: 4px; display: block;}
+        .history-action { font-size: 1rem; color: #001964; font-weight: 500;}
 
-        /* QR Code Modal 樣式 */
-        .modal-content { border-radius: 15px; text-align: center; padding: 10px; border: none; }
-        .qr-logo { width: 100px; margin-bottom: 10px; }
-        .qr-title { font-size: 1.1rem; color: #333; font-weight: bold; margin-bottom: 5px; }
-        .qr-subtitle { font-size: 0.9rem; color: #555; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
-        .qr-warning { color: red; font-size: 0.85rem; font-weight: bold; line-height: 1.5; margin-bottom: 15px; }
+        /* QR Code Modal */
+        .modal-content { border-radius: 15px; text-align: center; padding: 15px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .qr-logo { height: 40px; margin-bottom: 15px; object-fit: contain; }
+        .qr-title { font-size: 1.2rem; color: #333; font-weight: bold; margin-bottom: 5px; }
+        .qr-subtitle { font-size: 0.95rem; color: #555; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+        .qr-warning { color: #d32f2f; font-size: 0.9rem; font-weight: bold; line-height: 1.5; margin-bottom: 15px; }
         .qr-img { width: 180px; height: 180px; margin: 0 auto 20px auto; border: 1px solid #ddd; padding: 5px; border-radius: 10px; }
-        .btn-copy { border: 1px solid #001964; color: #001964; background: white; border-radius: 30px; padding: 8px 30px; width: 80%; margin: 0 auto 10px auto; display: block; }
-        .btn-confirm { background: #001964; color: white; border-radius: 30px; padding: 8px 30px; width: 80%; margin: 0 auto; display: block; border: none; }
+        .btn-copy { border: 1px solid #001964; color: #001964; background: white; border-radius: 30px; padding: 10px 30px; width: 85%; margin: 0 auto 12px auto; display: block; font-weight: 500; }
+        .btn-confirm { background: #001964; color: white; border-radius: 30px; padding: 10px 30px; width: 85%; margin: 0 auto; display: block; border: none; font-weight: 500;}
         .btn-copy:hover { background: #f0f4ff; }
         .btn-confirm:hover { background: #002a80; }
-        .btn-copy .material-icons { font-size: 16px; vertical-align: text-bottom; margin-right: 5px; }
+        .btn-copy .material-icons { font-size: 18px; vertical-align: text-bottom; margin-right: 5px; }
+        
+        .or-text { color: #a3acc8; font-size: 14px; margin: 5px 0; font-family: serif; font-style: italic; }
     </style>
 </head>
 <body>
@@ -107,7 +175,7 @@
         </div>
     </div>
 
-    <!-- ================= 1. 主導覽列 (只有在主視圖顯示) ================= -->
+    <!-- ================= 1. 主導覽列 ================= -->
     <div class="top-nav" v-if="currentView === 'main'">
         <button class="nav-btn" :class="{ active: currentTab === 'hcp' }" @click="switchTab('hcp')">HCP 清單</button>
         <button class="nav-btn" :class="{ active: currentTab === 'activity' }" @click="switchTab('activity')">活動清單</button>
@@ -119,34 +187,40 @@
         <div v-if="currentView === 'main' && currentTab === 'hcp'">
             
             <!-- 進度條 -->
-            <div style="background: #3b97de; color: white; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+            <div class="progress-card">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <div style="font-weight: bold;">HCP 邀請進度</div>
-                        <div style="font-size: 0.8rem;">計算您區域內的客戶</div>
+                        <div style="font-weight: bold; font-size: 1.1rem;">HCP 邀請進度</div>
+                        <div style="font-size: 0.85rem; opacity: 0.9;">計算您區域內的客戶</div>
                     </div>
-                    <div style="font-size: 1.5rem; font-weight: bold;">32%</div>
+                    <div class="d-flex align-items-center">
+                         <span class="material-icons me-1" style="font-size: 18px;">refresh</span>
+                         <span style="font-size: 1.8rem; font-weight: bold;">32%</span>
+                    </div>
                 </div>
-                <hr style="border-color: rgba(255,255,255,0.3);">
-                <div style="font-size: 0.9rem;">總數: 150 &nbsp;|&nbsp; 已邀請: 48</div>
+                <div class="progress-hr"></div>
+                <div class="d-flex justify-content-between" style="font-size: 0.9rem;">
+                    <div><span class="material-icons" style="font-size: 16px; vertical-align: middle;">person</span> 總數 <strong>150</strong></div>
+                    <div><span class="material-icons" style="font-size: 16px; vertical-align: middle;">check_circle</span> 已邀請 <strong>48</strong></div>
+                </div>
             </div>
 
             <!-- 搜尋 -->
             <div class="search-box">
-                <input type="text" class="form-control mb-2" placeholder="搜尋 HCP 姓名" v-model="form.hcpName">
-                <div class="text-center text-muted" style="font-size: 0.8rem;">or/and</div>
-                <input type="text" class="form-control mt-2" placeholder="搜尋院所" v-model="form.hospital">
-                <button class="btn-primary-custom mt-2" @click="doSearch" :disabled="isLoading">查詢</button>
+                <input type="text" class="form-control mb-1" placeholder="搜尋 HCP 姓名" v-model="form.hcpName">
+                <div class="text-center or-text">or/and</div>
+                <input type="text" class="form-control mt-1" placeholder="搜尋院所" v-model="form.hospital">
+                <button class="btn-primary-custom" @click="doSearch" :disabled="isLoading">查詢</button>
             </div>
 
             <!-- 子分頁 -->
-            <div class="sub-tabs mt-3">
+            <div class="sub-tabs mt-4">
                 <div class="sub-tab" :class="{ active: hcpSubTab === 'io' }" @click="switchSubTab('io')">Assigned 客戶</div>
                 <div class="sub-tab" :class="{ active: hcpSubTab === 'non-io' }" @click="switchSubTab('non-io')">Non-Assigned 客戶</div>
             </div>
 
             <div v-if="filteredHcpList.length === 0" class="text-center text-muted mt-5">
-                {{ hasSearched ? '查無資料' : '請點擊查詢' }}
+                {{ hasSearched ? '查無資料' : '請輸入條件後點擊查詢' }}
             </div>
 
             <!-- 列表 -->
@@ -161,23 +235,25 @@
                     </div>
                 </div>
                 <div class="info-text" v-for="hosp in hcp.hospital">{{ hosp }}</div>
-                <div class="sub-info-text mt-2">{{ getSourceText(hcp.dataSource) }}</div>
             </div>
         </div>
 
         <!-- ================= 視圖 2: 活動清單 ================= -->
         <div v-if="currentView === 'main' && currentTab === 'activity'">
-            <select class="form-control mb-3" v-model="activityFilter" @change="simulateLoading">
-                <option :value="true">待上線/進行中活動</option>
-                <option :value="false">已結束活動</option>
-                <option value="all">全部活動</option>
-            </select>
+            <div class="mb-3">
+                <!-- 修正：@change 呼叫 simulateLoading 時不要傳參數，避免事件物件被當作 callback 執行 -->
+                <select class="form-control" v-model="activityFilter" @change="simulateLoading()" style="background-image: none;">
+                    <option :value="true">待上線/進行中活動</option>
+                    <option :value="false">已結束活動</option>
+                    <option value="all">全部活動</option>
+                </select>
+            </div>
 
             <div v-for="act in filteredActivityList" :key="act.id" class="custom-card">
                 <img :src="act.image" class="activity-img" alt="Activity">
                 <div class="title-text mb-1">{{ act.title }}</div>
                 <div class="sub-info-text">{{ act.dateRange }} <br> {{ act.type }}</div>
-                <hr style="border-color: #d9e6f8;">
+                <div style="border-top: 1px solid #eee; margin: 10px 0;"></div>
                 
                 <table class="table-custom w-100">
                     <thead><tr><th></th><th>報到人數</th><th>報名人數</th></tr></thead>
@@ -188,7 +264,8 @@
                 </table>
 
                 <div class="action-btns">
-                    <button class="btn btn-outline" @click="simulateLoading">重新整理</button>
+                    <!-- 修正：@click 呼叫 simulateLoading 時不要傳參數 -->
+                    <button class="btn btn-outline" @click="simulateLoading()">重新整理</button>
                     <button class="btn btn-outline" @click="goToActivityRegistration(act)">查看名單</button>
                 </div>
             </div>
@@ -198,7 +275,7 @@
         <div v-if="currentView === 'hcp-detail' && selectedHcp">
             <button class="back-btn" @click="goBack"><span class="material-icons me-1">arrow_back_ios</span> 返回</button>
             
-            <div class="row mb-4">
+            <div class="row mb-4 px-2">
                 <div class="col-4">
                     <img :src="selectedHcp.avatar || 'https://placehold.co/100'" class="hcp-avatar" alt="Avatar">
                 </div>
@@ -226,7 +303,7 @@
             <div v-if="detailTab === 'info'">
                 <div v-for="hosp in selectedHcp.hospital" class="custom-card">
                     <div class="title-text mb-2">{{ hosp }}</div>
-                    <div class="row" style="font-size: 0.9rem;">
+                    <div class="row" style="font-size: 0.95rem; color: #001964;">
                         <div class="col-6 mb-2">台北市, 中正區</div>
                         <div class="col-6 mb-2">醫學中心</div>
                         <div class="col-6">新陳代謝科</div>
@@ -238,12 +315,12 @@
             <div v-if="detailTab === 'history'">
                 <div class="custom-card">
                     <div class="history-item">
-                        <div class="history-date">2023-12-01 10:00</div>
-                        <div class="history-action">瀏覽文章 「最新糖尿病指引」</div>
+                        <span class="history-date">2023-12-01 10:00</span>
+                        <span class="history-action">瀏覽文章 「最新糖尿病指引」</span>
                     </div>
                     <div class="history-item">
-                        <div class="history-date">2023-11-20 14:30</div>
-                        <div class="history-action">活動報名 「年度研討會」</div>
+                        <span class="history-date">2023-11-20 14:30</span>
+                        <span class="history-action">活動報名 「年度研討會」</span>
                     </div>
                 </div>
             </div>
@@ -256,7 +333,7 @@
             <div class="custom-card">
                 <div class="title-text">{{ selectedActivity.title }}</div>
                 <div class="sub-info-text mb-2">{{ selectedActivity.dateRange }}</div>
-                <hr style="border-color: #d9e6f8;">
+                <hr style="border-color: #eee;">
                 <table class="table-custom w-100">
                     <thead><tr><th></th><th>報到人數</th><th>報名人數</th></tr></thead>
                     <tbody>
@@ -268,9 +345,10 @@
 
             <div class="custom-card">
                 <input type="text" class="form-control mb-3" placeholder="搜尋姓名..." v-model="form.regSearch">
-                <button class="btn-primary-custom mb-3 w-100" @click="simulateLoading">搜尋</button>
+                <!-- 修正：按鈕呼叫 simulateLoading 時不傳參數 -->
+                <button class="btn-primary-custom mb-3 w-100" @click="simulateLoading()" style="margin-top: 0;">搜尋</button>
                 
-                <table class="table table-striped" style="font-size: 0.9rem;">
+                <table class="table table-striped" style="font-size: 0.95rem;">
                     <thead><tr><th>姓名</th><th>身份</th><th>報到</th></tr></thead>
                     <tbody>
                         <tr v-for="user in filteredHcpRegistrations" :key="user.id">
@@ -293,7 +371,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <img src="https://placehold.co/100x40?text=LOGO" class="qr-logo" alt="Logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/87/Novo_Nordisk.svg/1200px-Novo_Nordisk.svg.png" class="qr-logo" alt="Logo">
                     <div class="qr-title">醫事人員 邀請 QR code</div>
                     <div class="qr-subtitle">您將邀請 {{ currentQrHcpName }} 掃描加入</div>
                     <div class="qr-warning">
@@ -325,22 +403,11 @@
                 hcpSubTab: 'io',
                 detailTab: 'info',
                 
-                // 表單資料 (需搭配搜尋按鈕)
-                form: {
-                    hcpName: '',
-                    hospital: '',
-                    regSearch: ''
-                },
-                // 實際用於過濾的條件 (按下搜尋後才更新)
-                filter: {
-                    hcpName: '',
-                    hospital: '',
-                    regSearch: ''
-                },
-                hasSearched: true, // 預設顯示資料
+                form: { hcpName: '', hospital: '', regSearch: '' },
+                filter: { hcpName: '', hospital: '', regSearch: '' },
+                hasSearched: true, 
 
                 activityFilter: true,
-                
                 selectedHcp: null,
                 selectedActivity: null,
                 currentQrHcpName: '',
@@ -356,7 +423,7 @@
                     { 
                         id: 'a1', title: '2025 糖尿病照護研討會', 
                         dateRange: '1/15 09:00 - 1/15 17:00', type: '研討會・實體', 
-                        image: 'https://placehold.co/600x300/eee/31343C?text=Seminar+2025',
+                        image: 'https://placehold.co/600x300/eee/31343C?text=Seminar',
                         hcpCheckIn: 20, hcpApply: 50, nnCheckIn: 2, nnApply: 5, totalCheckIn: 22, totalApply: 55, isEnabled: true
                     },
                     { 
@@ -378,11 +445,10 @@
         mounted() {
             const el = document.getElementById('qrCodeModal');
             this.qrModalInstance = new bootstrap.Modal(el);
-            this.simulateLoading(); // 初始載入
+            this.simulateLoading(); 
         },
         computed: {
             filteredHcpList() {
-                // 使用 filter 物件來過濾，而非即時輸入
                 let list = this.hcpData.filter(item => {
                     if (this.hcpSubTab === 'io') return item.dataSource === 'IQVIA';
                     else return item.dataSource !== 'IQVIA';
@@ -397,23 +463,21 @@
             },
             filteredHcpRegistrations() {
                 let list = this.allMockRegistrationList.filter(user => user.identity === 'HCP');
-                // 使用輸入框即時過濾 (活動名單通常較少，可以保留即時，或也改成按鈕觸發)
-                // 這裡配合要求，搜尋時也會觸發 loading，所以用 form.regSearch 配合按鈕邏輯
                 if (this.form.regSearch) list = list.filter(user => user.name.includes(this.form.regSearch));
                 return list;
             }
         },
         methods: {
-            // 通用 Loading 模擬器
             simulateLoading(callback) {
                 this.isLoading = true;
                 setTimeout(() => {
-                    if (callback) callback();
+                    // 修正：增加檢查 callback 是否為函式，避免把事件物件當函式執行
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
                     this.isLoading = false;
-                }, 800); // 延遲 0.8 秒
+                }, 800);
             },
-
-            // 觸發搜尋
             doSearch() {
                 this.simulateLoading(() => {
                     this.filter.hcpName = this.form.hcpName;
@@ -421,41 +485,25 @@
                     this.hasSearched = true;
                 });
             },
-
-            // 切換主 Tab
             switchTab(tab) {
                 if (this.currentTab === tab) return;
-                this.simulateLoading(() => {
-                    this.currentTab = tab;
-                });
+                this.simulateLoading(() => { this.currentTab = tab; });
             },
-
-            // 切換子 Tab
             switchSubTab(tab) {
                 if (this.hcpSubTab === tab) return;
-                this.simulateLoading(() => {
-                    this.hcpSubTab = tab;
-                });
+                this.simulateLoading(() => { this.hcpSubTab = tab; });
             },
-
-            // 切換詳情頁 Tab
             switchDetailTab(tab) {
                 if (this.detailTab === tab) return;
-                this.simulateLoading(() => {
-                    this.detailTab = tab;
-                });
+                this.simulateLoading(() => { this.detailTab = tab; });
             },
-
-            getSourceText(source) { return ''; },
-            
             openQrModal(hcp) {
                 this.currentQrHcpName = hcp.name;
                 this.qrModalInstance.show();
             },
             copyLink() {
-                alert('已複製連結: https://www.gilead.com/zh-tw/company/gilead-in-taiwan');
+                alert('已複製連結');
             },
-
             goToHcpDetail(hcp) {
                 this.simulateLoading(() => {
                     this.selectedHcp = hcp;
@@ -466,7 +514,7 @@
             goToActivityRegistration(act) {
                 this.simulateLoading(() => {
                     this.selectedActivity = act;
-                    this.form.regSearch = ''; // 清空搜尋
+                    this.form.regSearch = '';
                     this.currentView = 'activity-registration';
                 });
             },
